@@ -18,7 +18,7 @@ function addButton(event) {
     
     let buttonName = $("<button>");
     buttonName.text(textValue);
-    buttonName.attr("id", "name-button");
+    buttonName.attr("class", "city-button");
     formIDEL.append(buttonName);
     creatObject(textValue);
     event.preventDefault();
@@ -33,55 +33,49 @@ function creatObject(value){
             return response.json();
         })
         .then(function(data){
-            console.log(data);
-            console.log(data[0].lon);
-            console.log(data[0].lat);
             let weatherURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${data[0].lat}&lon=${data[0].lon}&units=imperial&appid=3b3153aacbf761a7477c9bcfe312b0cc`
+            
             fetch(weatherURL)
-        .then(function(response){
-            return response.json();
-        })
-        .then(function(data){
-            // console.log(data);
-            // console.log(data.list[0].main.temp);
-            // console.log(data.list[0].main.humidity);
-            // console.log(data.list[0].wind.speed);
-            cityNameEl.text(`${data.city.name} (${data.list[0].dt_txt})`);
-            tempEL.text(`Temp: ${data.list[0].main.temp} °F`);
-            windEL.text(`Wind: ${data.list[0].wind.speed} MPH`);
-            humidityEL.text(`Humidity: ${data.list[0].main.humidity} %`);
-            img.attr("src", `https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`)
-            cardPrinter(data)
-        })
-        })
-    }
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(data){
+                    cityNameEl.text(`${data.city.name} (${data.list[0].dt_txt})`);
 
-    // function to add card for future day
+                    tempEL.text(`Temp: ${data.list[0].main.temp} °F`);
 
-    function cardPrinter(value){
+                    windEL.text(`Wind: ${data.list[0].wind.speed} MPH`);
+
+                    humidityEL.text(`Humidity: ${data.list[0].main.humidity} %`);
+
+                    img.attr("src", `https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@2x.png`);
+
+                    remove();
+                    cardPrinter(data);
+                })
+        })
+}
+
+// function to add card for future day
+function cardPrinter(value){
         console.log(value);
         console.log(value.list[0].main.temp);
         console.log(value.list[0].main.humidity);
         console.log(value.list[0].wind.speed);
-        for(let i = 4; i < value.list.length; i = i + 8){
+    for(let i = 4; i < value.list.length; i = i + 8){
         let cardEL = $("<section>");
         cardEL.attr("class", "card");
         let cardBodyEL = $("<article>");
         cardBodyEL.attr("class", "card-body");
         let dateHeadEL = $("<h5>");
         dateHeadEL.attr("class", "card-title");
-        dateHeadEL.text(`${value.list[i].dt_txt}`);
         let cardImgEL = $("<img>");
-        cardImgEL.attr("src", `https://openweathermap.org/img/wn/${value.list[i].weather[0].icon}@2x.png`);
         let cardTempEL = $("<p>");
         cardTempEL.attr("class", "card-text");
-        cardTempEL.text(`Temp: ${value.list[i].main.temp} °F`);
         let cardWindEL = $("<p>");
         cardWindEL.attr("class", "card-text");
-        cardWindEL.text(`Wind: ${value.list[i].wind.speed} MPH`);
         let cardHumidity = $("<p>");
         cardHumidity.attr("class", "card-text");
-        cardHumidity.text(`Humidity: ${value.list[i].main.humidity} %`);
         cardGroupEL.append(cardEL);
         cardEL.append(cardBodyEL);
         cardBodyEL.append(dateHeadEL);
@@ -89,5 +83,32 @@ function creatObject(value){
         cardBodyEL.append(cardTempEL);
         cardBodyEL.append(cardWindEL);
         cardBodyEL.append(cardHumidity);
-        }
+        dateHeadEL.text(`${value.list[i].dt_txt}`);
+        cardImgEL.attr("src", `https://openweathermap.org/img/wn/${value.list[i].weather[0].icon}@2x.png`);
+        cardTempEL.text(`Temp: ${value.list[i].main.temp} °F`);
+        cardWindEL.text(`Wind: ${value.list[i].wind.speed} MPH`);
+        cardHumidity.text(`Humidity: ${value.list[i].main.humidity} %`);
     }
+}
+
+// function to remove old cards
+ function remove(){
+    let sectionArrayEL = document.querySelectorAll(".card");
+    console.log(sectionArrayEL);
+    for(let i = 0; i < sectionArrayEL.length; i++){
+        sectionArrayEL[i].remove();
+    }
+ }
+    
+    // function for event listener for history buttons
+    
+
+let cityListenner = function(event){
+    event.preventDefault();
+
+    let cityName = event.target.innerText;
+    console.log(cityName);
+    creatObject(cityName);
+}
+
+formIDEL.on("click", ".city-button", cityListenner);
