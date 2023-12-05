@@ -6,6 +6,7 @@ let tempEL = $("#temp");
 let windEL = $("#wind");
 let humidityEL = $("#humidity");
 let input = $("#search");
+let img = $("#img")
 
 sectionIDEL.on("click", ".btn", addButton);
 
@@ -46,8 +47,9 @@ function creatObject(value){
             console.log(data.list[0].wind.speed);
             cityNameEl.text(`${data.city.name} (${data.list[0].dt_txt})`);
             tempEL.text(`Temp: ${data.list[0].main.temp} °F`);
-            windEL.text(`Wind: ${data.list[0].wind.speed} MPH`)
-            humidityEL.text(`Humidity: ${data.list[0].main.humidity} %`)
+            windEL.text(`Wind: ${data.list[0].wind.speed} MPH`);
+            humidityEL.text(`Humidity: ${data.list[0].main.humidity} %`);
+            img.attr("src", "https://openweathermap.org/img/wn/10d@2x.png")
         })
         })
     }
