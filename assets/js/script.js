@@ -8,14 +8,32 @@ let humidityEL = $("#humidity");
 let input = $("#search");
 let img = $("#img")
 let cardGroupEL = $("#card-group")
+let cityNameArray = [];
 
-sectionIDEL.on("click", ".btn", addButton);
+creatObject("Philadelphia");
+// function to print text from local storage
+function printCityName(){
+    let storedCityName = JSON.parse(localStorage.getItem("CityName"));
+    if(storedCityName !== null){
+        cityNameArray = storedCityName;
 
-// event listener for submit button
+        for(let i = 0; i < cityNameArray.length; i++){
+            creatObject(cityNameArray[0]);
+            let buttonName = $("<button>");
+            buttonName.text(cityNameArray[i]);
+            buttonName.attr("class", "city-button");
+            formIDEL.append(buttonName);
+        }
+    } 
+}
+printCityName();
+// function for submit button
 function addButton(event) {
     let textValue = input.val().trim();
         console.log(textValue);
-    
+    cityNameArray.push(textValue);
+    localStorage.setItem("CityName", JSON.stringify(cityNameArray));
+
     let buttonName = $("<button>");
     buttonName.text(textValue);
     buttonName.attr("class", "city-button");
@@ -100,9 +118,7 @@ function cardPrinter(value){
     }
  }
     
-    // function for event listener for history buttons
-    
-
+// function for event listener for history buttons
 let cityListenner = function(event){
     event.preventDefault();
 
@@ -111,4 +127,15 @@ let cityListenner = function(event){
     creatObject(cityName);
 }
 
+
+
+// event listener for clear button
+let clear = document.querySelector("#remove-button");
+clear.addEventListener("click", function(){
+    city = [];
+    localStorage.setItem("CityName", JSON.stringify(city));
+});
+// event listener for history buttons
 formIDEL.on("click", ".city-button", cityListenner);
+// event listener for submit button
+sectionIDEL.on("click", ".btn", addButton);
