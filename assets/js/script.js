@@ -25,7 +25,7 @@ function addButton(event) {
 
 // function to create header
 function creatObject(value){
-    let cityNametURL = `http://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=1&appid=3b3153aacbf761a7477c9bcfe312b0cc`
+    let cityNametURL = `https://api.openweathermap.org/geo/1.0/direct?q=${value}&limit=1&appid=3b3153aacbf761a7477c9bcfe312b0cc`
 
     fetch(cityNametURL)
         .then(function(response){
@@ -35,7 +35,7 @@ function creatObject(value){
             console.log(data);
             console.log(data[0].lon);
             console.log(data[0].lat);
-            let weatherURL = `http://api.openweathermap.org/data/2.5/forecast?lat=${data[0].lat}&lon=${data[0].lon}&units=imperial&appid=3b3153aacbf761a7477c9bcfe312b0cc`
+            let weatherURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${data[0].lat}&lon=${data[0].lon}&units=imperial&appid=3b3153aacbf761a7477c9bcfe312b0cc`
             fetch(weatherURL)
         .then(function(response){
             return response.json();
