@@ -14,14 +14,19 @@ nav, div{
 
 /* style for search form */
 label{
-    font-size: 26px;
+    font-size: 28px;
     font-weight: bold;
 }
+#search{
+    font-size: 21px;
+}
 .btn{
+    width: 100%;
     font-size: 20px;
     background-color: rgb(55, 122, 55);
 }
 .city-button {
+    width: 100%;
     display: block;
     font-size: 23px;
     margin-top: 8px;
@@ -31,6 +36,7 @@ label{
     border-radius: 5px;
 }
 #remove-button {
+    width: 100%;
     font-size: 23px;
     margin-top: 8px;
     padding: 5px;
