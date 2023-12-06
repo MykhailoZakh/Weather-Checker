@@ -75,7 +75,7 @@ function creatObject(value){
 
 // function to add card for future day
 function cardPrinter(value){
-    for(let i = 4; i < value.list.length; i = i + 8){
+    for(let i = 8; i < value.list.length; i = i + 8){
         let cardEL = $("<section>");
         cardEL.attr("class", "card");
         let cardBodyEL = $("<article>");
