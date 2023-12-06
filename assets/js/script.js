@@ -30,7 +30,6 @@ printCityName();
 // function for submit button
 function addButton(event) {
     let textValue = input.val().trim();
-        console.log(textValue);
     cityNameArray.push(textValue);
     localStorage.setItem("CityName", JSON.stringify(cityNameArray));
 
@@ -76,10 +75,6 @@ function creatObject(value){
 
 // function to add card for future day
 function cardPrinter(value){
-        console.log(value);
-        console.log(value.list[0].main.temp);
-        console.log(value.list[0].main.humidity);
-        console.log(value.list[0].wind.speed);
     for(let i = 4; i < value.list.length; i = i + 8){
         let cardEL = $("<section>");
         cardEL.attr("class", "card");
@@ -112,7 +107,6 @@ function cardPrinter(value){
 // function to remove old cards
  function remove(){
     let sectionArrayEL = document.querySelectorAll(".card");
-    console.log(sectionArrayEL);
     for(let i = 0; i < sectionArrayEL.length; i++){
         sectionArrayEL[i].remove();
     }
@@ -121,9 +115,7 @@ function cardPrinter(value){
 // function for event listener for history buttons
 let cityListenner = function(event){
     event.preventDefault();
-
     let cityName = event.target.innerText;
-    console.log(cityName);
     creatObject(cityName);
 }
 
